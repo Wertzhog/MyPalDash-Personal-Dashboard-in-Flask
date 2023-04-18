@@ -1,0 +1,8 @@
+CREATE TABLE FoodFacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    food TEXT NOT NULL,
+    calories NUMERIC NOT NULL,
+    protein NUMERIC NOT NULL,
+    carbs NUMERIC NOT NULL,
+    fat NUMERIC NOT NULL
+);
