@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Edit food</h1>
+
+<form method="POST" action="{{ url_for('edit', id=foods_sel['id']) }}/">
+    <label for="food">Food:</label>
+    <input type="text" id="food" name="food" value="{{ foods_sel['food'] }}" required>
+
+    <label for="calories">Calories:</label>
+    <input type="number" id="calories" name="calories" value="{{ foods_sel['calories'] }}" required>
+
+    <label for="protein">Protein:</label>
+    <input type="number" id="protein" name="protein" value="{{ foods_sel['protein'] }}"  required>
+
+    <label for="carbs">Carbs:</label>
+    <input type="number" id="carbs" name="carbs" value="{{ foods_sel['carbs'] }}" required>
+
+    <label for="fat">Fat:</label>
+    <input type="number" id="fat" name="fat" value="{{ foods_sel['fat'] }}" required>
+
+    <label for="id">Id(don't edit)</label>
+    <input type="number" id="id" name="id" value="{{ foods_sel['id'] }}" required>
+
+    <button type="submit">Edit</button>
+</form>
+   
+{% endblock %}
