@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 from flask import Flask, render_template, request, url_for, flash, redirect, abort
 
 
@@ -88,6 +89,30 @@ def delete(id):
         print(e)
         return "A database error occurred."
 
+#Add food item to daily food table  
+@app.route('/add_food/<id>/', methods=('GET', 'POST'))
+def add_food(id):
+    foods_sel = get_post(id)
+    if request.method == 'POST':
+        try:
+            qty = int(request.form['quantity'])
+            calories = int(request.form['calories']) * qty
+            carbs = int(request.form['carbs']) * qty
+            protein = int(request.form['protein']) * qty
+            fat = int(request.form['fat']) * qty
+            datum = date.today()
+            conn = get_db_connection()
+            conn.execute('INSERT INTO FoodDaily (calories, protein, carbs, fat, datum) VALUES (?, ?, ?, ?, ?)',
+                         (calories, protein, carbs, fat, datum))
+            conn.commit()
+            conn.close()
+            flash("Food item was logged successfully.")
+            return redirect(url_for('food'))
+        except sqlite3.Error as e:
+            print(e)
+            return "A database error occurred."
+    
+    return render_template('add_food.html', foods_sel=foods_sel)
 
 
 
