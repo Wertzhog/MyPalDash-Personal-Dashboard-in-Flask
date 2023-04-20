@@ -74,6 +74,19 @@ def edit(id):
     
     return render_template('edit_food.html', foods_sel=foods_sel)
 
+#delete food item from table
+@app.route('/delete/<id>/', methods=['GET'])
+def delete(id):
+    try:
+        conn = get_db_connection()
+        conn.execute('DELETE FROM FoodFacts WHERE id = ?', (id,))
+        conn.commit()
+        conn.close()
+        flash("Food item was deleted successfully.")
+        return redirect(url_for('food'))
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
 
 
 
