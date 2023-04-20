@@ -114,6 +114,20 @@ def add_food(id):
     
     return render_template('add_food.html', foods_sel=foods_sel)
 
+#Delete item from daily food table
+@app.route('/delete_daily/<id>/', methods=['GET'])
+def delete_daily(id):
+    try:
+        conn = get_db_connection()
+        conn.execute('DELETE FROM FoodDaily WHERE id = ?', (id,))
+        conn.commit()
+        conn.close()
+        flash("Food item was deleted successfully.")
+        return redirect(url_for('food'))
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
+
 
 
 
