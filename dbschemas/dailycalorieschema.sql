@@ -1,0 +1,8 @@
+CREATE TABLE FoodDaily (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    calories NUMERIC NOT NULL,
+    protein NUMERIC NOT NULL,
+    carbs NUMERIC NOT NULL,
+    fat NUMERIC NOT NULL,
+    datum TEXT NOT NULL
+);

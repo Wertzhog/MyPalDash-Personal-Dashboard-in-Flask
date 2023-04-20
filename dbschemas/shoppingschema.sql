@@ -1,0 +1,5 @@
+CREATE TABLE Shopping (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    shopping TEXT NOT NULL
+   
+);
