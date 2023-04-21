@@ -150,6 +150,79 @@ def exercise():
         print(e)
         return "A database error occurred."
 
+#Add Exercise to db
+@app.route('/add_exercise', methods=('GET', 'POST'))
+def add_exercise():
+    if request.method == 'POST':
+        try:
+            weekid = request.form['weekid']
+            dan = request.form['dan']
+            exercise_ta = request.form['exercise']
+            conn = get_db_connection()
+            if dan=="dan1":
+                conn.execute('INSERT INTO ExerciseLogs1(weekid, dan1) VALUES (?, ?)',
+                            (weekid, exercise_ta))
+            elif dan=="dan2":
+                conn.execute('INSERT INTO ExerciseLogs1(weekid, dan2) VALUES (?, ?)',
+                            (weekid, exercise_ta))
+            elif dan=="dan3":
+                conn.execute('INSERT INTO ExerciseLogs1(weekid, dan3) VALUES (?, ?)',
+                            (weekid, exercise_ta))
+            elif dan=="dan4":
+                conn.execute('INSERT INTO ExerciseLogs1(weekid, dan4) VALUES (?, ?)',
+                            (weekid, exercise_ta))
+            else:
+                conn.execute('INSERT INTO ExerciseLogs1(weekid, dan5) VALUES (?, ?)',
+                            (weekid, exercise_ta))
+            conn.commit()
+            conn.close()
+            flash("New exercise was added successfully.")
+            return redirect(url_for('exercise'))
+        except sqlite3.Error as e:
+            print(e)
+            return "A database error occurred."
+    return render_template('add_exercise.html')
+
+#Edit exercise 
+@app.route('/edit_exercise/<id>/', methods=('GET', 'POST'))
+def edit_exercise(id):
+    exercise_sel = get_exercise(id)
+    if request.method == 'POST':
+        try:
+            exercise_te = request.form['exercise']
+            dan = request.form['dan']
+            id_f = request.form['weekid']
+            conn = get_db_connection()
+            if dan=="dan1":
+                conn.execute('UPDATE ExerciseLogs1 SET dan1 = ?'
+                            ' WHERE weekid = ?',
+                            (exercise_te,  id_f))
+            elif dan=="dan2":
+                conn.execute('UPDATE ExerciseLogs1 SET dan2 = ?'
+                            ' WHERE weekid = ?',
+                            (exercise_te,  id_f))
+            elif dan=="dan3":
+                conn.execute('UPDATE ExerciseLogs1 SET dan3 = ?'
+                            ' WHERE weekid = ?',
+                            (exercise_te,  id_f))
+            elif dan=="dan4":
+                conn.execute('UPDATE ExerciseLogs1 SET dan4 = ?'
+                            ' WHERE weekid = ?',
+                            (exercise_te,  id_f))
+            else:
+                conn.execute('UPDATE ExerciseLogs1 SET dan5 = ?'
+                            ' WHERE weekid = ?',
+                            (exercise_te,  id_f))
+            conn.commit()
+            conn.close()
+            flash("Exercise was edited successfully.")
+            return redirect(url_for('exercise'))
+        except sqlite3.Error as e:
+            print(e)
+            return "A database error occurred."
+    
+    return render_template('edit_exercise.html', exercise_sel=exercise_sel)
+
 
 
 

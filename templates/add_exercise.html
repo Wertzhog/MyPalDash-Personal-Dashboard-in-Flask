@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Add a New Post</h1>
+<!-- in the add_exercise.html template -->
+<form method="POST" action="{{ url_for('add_exercise') }}">
+   
+       <label for="weekid">Week ID</label>
+       <input type="number" id="weekid" name="weekid" required>
+   
+       <select class="form-select" name="dan">
+        <option selected>Click to select</option>
+        <option value="dan1">dan1</option>
+        <option value="dan2">dan2</option>
+        <option value="dan3">dan3</option>
+        <option value="dan4">dan4</option>
+        <option value="dan5">dan5</option>
+      </select>
+
+      <label for="exercise">Exercise</label>
+      <input type="text" id="exercise" name="exercise" required>
+
+       <button type="submit">Add exercise</button>
+   </form>
+   
+{% endblock %}
