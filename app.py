@@ -223,7 +223,19 @@ def edit_exercise(id):
     
     return render_template('edit_exercise.html', exercise_sel=exercise_sel)
 
-
+#Delete exercise
+@app.route('/delete_exercise/<id>/', methods=['GET'])
+def delete_exercise(id):
+    try:
+        conn = get_db_connection()
+        conn.execute('DELETE FROM ExerciseLogs1 WHERE weekid = ?', (id,))
+        conn.commit()
+        conn.close()
+        flash("Exercise was deleted successfully.")
+        return redirect(url_for('exercise'))
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
 
 
 
