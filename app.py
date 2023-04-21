@@ -22,6 +22,16 @@ def get_post(post_id):
         abort(404)
     return post
 
+#Get specific exercise from table
+def get_exercise(post_id):
+    conn = get_db_connection()
+    post = conn.execute('SELECT * FROM ExerciseLogs1 WHERE weekid = ?',
+                        (post_id,)).fetchone()
+    conn.close()
+    if post is None:
+        abort(404)
+    return post
+
 @app.route("/")
 def home():
 
@@ -128,6 +138,17 @@ def delete_daily(id):
         print(e)
         return "A database error occurred."
 
+#Exercise views for CRUD operations
+@app.route("/exercise")
+def exercise():
+    try:
+        conn = get_db_connection()
+        exercises = conn.execute('SELECT * FROM ExerciseLogs1').fetchall()
+        conn.close()
+        return render_template('exercise.html', exercises=exercises)
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
 
 
 

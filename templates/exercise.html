@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Exercises</h1>
+      <table class="table table-bordered table-sm container-sm text-light">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">weekId</th>
+              <th scope="col">Dan 1</th>
+              <th scope="col">Dan 2</th>
+              <th scope="col">Dan 3</th>
+              <th scope="col">Dan 4</th>
+              <th scope="col">Dan 5</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+  {% for exercise in exercises %}
+            <tr>
+              <th scope="row">{{ exercise['weekid'] }}</th>
+              <td>{{ exercise['dan1'] }}</td>
+              <td>{{ exercise['dan2'] }}</td>
+              <td>{{ exercise['dan3'] }}</td>
+              <td>{{ exercise['dan4'] }}</td>
+              <td>{{ exercise['dan5'] }}</td>
+              
+            </tr>
+  {% endfor %}
+          </tbody>
+        </table>
+
+{% endblock %}
