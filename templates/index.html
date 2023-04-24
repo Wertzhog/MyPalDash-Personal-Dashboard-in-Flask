@@ -1,5 +1,94 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Main thing</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Daily food - calories and charts -->
+<!--Check Jinja Loop control for charts , example loop.index :D -->
+<div class="row">
+    <div class="col-sm-6">
+      <h3 class="my-4">Daily Food Facts:</h3>  
+{% for cal in cals %}
+<p>Calories</p>
+      <svg width="300" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="200" height="30" stroke="black" fill="white" stroke-width="3"/>
+          <text x="20" y="30">{{ cal[0] }}/2300</text>
+      </svg>
+{% endfor %}
+
+{% for pro in pros %}
+<p>Protein</p>
+      <svg width="300" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="200" height="30" stroke="black" fill="white" stroke-width="3"/>
+          <text x="20" y="30">{{ pro[0] }}/150</text>
+      </svg>
+{% endfor %}
+
+{% for carb in carbs %}
+<p>Carbs</p>
+      <svg width="300" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="200" height="30" stroke="black" fill="white" stroke-width="3"/>
+          <text x="20" y="30">{{ carb[0] }}</text>
+      </svg>
+{% endfor %}
+
+{% for fat in fats %}
+<p>Fats</p>
+      <svg width="300" height="60" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="200" height="30" stroke="black" fill="white" stroke-width="3"/>
+          <text x="20" y="30">{{ fat[0] }}</text>
+      </svg>   
+{% endfor %}
+    </div>
+
+    <div class="col-sm-6">
+      <h3 class="my-4">Chart:</h3> 
+<svg width="300" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+{% for gr in grupa %}
+{% if loop.index <= 7 %}
+  <rect x="{{ loop.cycle('20', '50', '80', '110', '140', '170', '200') }}" y="{{ 300 - gr[0]/3 }}" width="20" height="{{ gr[0]/3 }}" stroke="black" fill="white" stroke-width="1"/>
+  <text x="{{ loop.cycle('20', '50', '80', '110', '140', '170', '200') }}" y="20" fill='white'  >{{ loop.cycle('1', '2', '3', '4', '5', '6', '7') }}</text>
+{% endif %}
+{% endfor %}
+</svg>
+
+    </div>
+</div>
+<!-- Shopping and TODO lists -->
+<div class="row my-4" >
+    <div class="col-6">
+        <h3 class="my-4">Shopping list:</h3>
+        <ul>
+        {% for sh in shopping %}
+            <li>{{ sh.shopping }}  <a href="{{ url_for('delete_shop_item', id=sh.shopping) }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                </svg>
+                </a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="col-6">
+        <h3 class="my-4">TODO list:</h3>
+        <ul>
+        {% for td in todo %}
+            <li>{{ td.todo }}  <a href="{{ url_for('delete_todo_item', id=td.todo) }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                </svg>
+                </a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+  
+
+
+
+{% endblock %}
 {% endblock %}
