@@ -237,7 +237,24 @@ def delete_exercise(id):
         print(e)
         return "A database error occurred."
 
+#List views and CRUD operations
 
+@app.route('/add_to_shopping', methods=('GET', 'POST'))
+def add_to_shopping():
+    if request.method == 'POST':
+        try:
+            shopping = request.form['shopping']
+            conn = get_db_connection()
+            conn.execute('INSERT INTO Shopping (shopping) VALUES (?)',
+                         (shopping,))
+            conn.commit()
+            conn.close()
+            flash("New shopping list item was added successfully.")
+            return redirect(url_for('home'))
+        except sqlite3.Error as e:
+            print(e)
+            return "A database error occurred."
+    return render_template('add_to_shopping.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

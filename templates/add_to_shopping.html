@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Add a New item to list</h1>
+
+<form method="POST" action="{{ url_for('add_to_shopping') }}">
+    <label for="shopping">What?</label>
+    <br>
+    <textarea name="shopping"
+                placeholder="Shopping list item"
+                rows="15"
+                cols="60"
+                >{{ request.form['shopping'] }}</textarea>
+    <br>
+       <button type="submit">Add to list!</button>
+   </form>
+{% endblock %}
