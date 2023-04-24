@@ -274,6 +274,35 @@ def add_to_todo():
             return "A database error occurred."
     return render_template('add_to_todo.html')
 
+#Deleting from list
+#Shopping
+@app.route('/delete_shop_item/<id>/', methods=['GET'])
+def delete_shop_item(id):
+    try:
+        conn = get_db_connection()
+        conn.execute('DELETE FROM Shopping WHERE shopping = ?', (id,))
+        conn.commit()
+        conn.close()
+        flash("List item was deleted successfully.")
+        return redirect(url_for('home'))
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
+
+#Todo
+@app.route('/delete_todo_item/<id>/', methods=['GET'])
+def delete_todo_item(id):
+    try:
+        conn = get_db_connection()
+        conn.execute('DELETE FROM Todo WHERE todo = ?', (id,))
+        conn.commit()
+        conn.close()
+        flash("List item was deleted successfully.")
+        return redirect(url_for('home'))
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
+
 if __name__ == "__main__":
     app.run(debug=True)
 
