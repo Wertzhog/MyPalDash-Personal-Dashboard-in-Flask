@@ -256,6 +256,24 @@ def add_to_shopping():
             return "A database error occurred."
     return render_template('add_to_shopping.html')
 
+#Adding item to todo list(Debug note:pass argument to conn.execute as tuple with single element :D)
+@app.route('/add_to_todo', methods=('GET', 'POST'))
+def add_to_todo():
+    if request.method == 'POST':
+        try:
+            todo = request.form['todo']
+            conn = get_db_connection()
+            conn.execute('INSERT INTO Todo (todo) VALUES (?)',
+                         (todo,))
+            conn.commit()
+            conn.close()
+            flash("New Todo item was added successfully.")
+            return redirect(url_for('home'))
+        except sqlite3.Error as e:
+            print(e)
+            return "A database error occurred."
+    return render_template('add_to_todo.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
 
