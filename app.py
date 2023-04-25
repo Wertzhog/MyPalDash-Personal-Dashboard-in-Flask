@@ -32,10 +32,34 @@ def get_exercise(post_id):
         abort(404)
     return post
 
+#Home dashboard
 @app.route("/")
 def home():
+    try:
+        datum = date.today()
+        today = datum.strftime('%Y-%m-%d')
+        conn = get_db_connection()
+        todo_sql = "SELECT * FROM Todo"
+        shopping_sql = "SELECT * FROM Shopping"
+        group_sql = "SELECT SUM(calories) FROM FoodDaily GROUP BY datum"
+        cal_sql = "SELECT SUM(calories) FROM FoodDaily WHERE datum=?"
+        pro_sql = "SELECT SUM(protein) FROM FoodDaily WHERE datum=?"
+        carb_sql = "SELECT SUM(carbs) FROM FoodDaily WHERE datum=?"
+        fat_sql = "SELECT SUM(fat) FROM FoodDaily WHERE datum=?"
 
-    return "Init app!"
+        todo = conn.execute(todo_sql).fetchall()
+        shopping = conn.execute(shopping_sql).fetchall()
+        fats = conn.execute(fat_sql, (today,)).fetchall()
+        carbs = conn.execute(carb_sql, (today,)).fetchall()
+        pros = conn.execute(pro_sql, (today,)).fetchall()
+        cals = conn.execute(cal_sql, (today,)).fetchall()
+        grupa = conn.execute(group_sql).fetchall()
+        conn.close()
+        return render_template('index.html', cals=cals, grupa=grupa, pros=pros, carbs=carbs, fats=fats, shopping=shopping, todo=todo)
+    except sqlite3.Error as e:
+        print(e)
+        return "A database error occurred."
+
 
 #Add food item
 @app.route('/create/', methods=('GET', 'POST'))
