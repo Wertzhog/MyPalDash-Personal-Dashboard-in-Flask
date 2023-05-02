@@ -41,7 +41,7 @@ def home():
         conn = get_db_connection()
         todo_sql = "SELECT * FROM Todo"
         shopping_sql = "SELECT * FROM Shopping"
-        group_sql = "SELECT SUM(calories) FROM FoodDaily GROUP BY datum"
+        group_sql = "SELECT SUM(calories) FROM FoodDaily GROUP BY datum ORDER BY datum DESC"
         cal_sql = "SELECT SUM(calories) FROM FoodDaily WHERE datum=?"
         pro_sql = "SELECT SUM(protein) FROM FoodDaily WHERE datum=?"
         carb_sql = "SELECT SUM(carbs) FROM FoodDaily WHERE datum=?"
